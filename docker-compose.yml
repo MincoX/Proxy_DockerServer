@@ -22,23 +22,6 @@ services:
     ports:
       - "63791:6379"
 
-  proxy_server_nginx:
-    container_name: proxy_server_nginx
-    restart: always
-    build:
-      context: ./nginx/init
-      dockerfile: Dockerfile
-    ports:
-      - "9999:9999"
-      - "80:9999"
-    depends_on:
-      - proxy_server_web
-    volumes:
-      - ./nginx/logs:/tmp
-      - ./nginx/init/proxy_server_api.conf:/etc/nginx/conf.d/proxy_server_api.conf:ro
-      - ../Proxy_Server/App/static:/usr/share/nginx/Proxy_Server/static
-      - /etc/localtime:/etc/localtime:ro
-
   proxy_server_web:
     container_name: proxy_server_web
     restart: always
@@ -53,6 +36,20 @@ services:
       - /etc/localtime:/etc/localtime:ro
     depends_on:
       - proxy_server_mysql
-#    command: python ./models.py
+  #    command: python ./models.py
 
-
+  proxy_server_nginx:
+    container_name: proxy_server_nginx
+    restart: always
+    build:
+      context: ./nginx/init
+      dockerfile: Dockerfile
+    ports:
+      - "9999:9999"
+    depends_on:
+      - proxy_server_web
+    volumes:
+      - ./nginx/logs:/tmp
+      - ./nginx/init/proxy_server_api.conf:/etc/nginx/conf.d/proxy_server_api.conf:ro
+      - ../Proxy_Server/App/static:/usr/share/nginx/Proxy_Server/static
+      - /etc/localtime:/etc/localtime:ro
