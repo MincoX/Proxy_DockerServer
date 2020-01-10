@@ -51,6 +51,6 @@ services:
       - ../Proxy_Server:/usr/src/Proxy_Server
     depends_on:
       - proxy_server_mysql
-    command: python ./models.py
+#    command: python ./models.py
 
 
