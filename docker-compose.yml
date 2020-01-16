@@ -33,6 +33,7 @@ services:
       - "19999:9999"
     volumes:
       - ../Proxy_Server:/usr/src/Proxy_Server
+      - ./source_code/socket.py:/usr/local/lib/python3.7/site-packages/engineio/socket.py
       - /etc/localtime:/etc/localtime:ro
     depends_on:
       - proxy_server_mysql
