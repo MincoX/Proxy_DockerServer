@@ -32,9 +32,10 @@ services:
     ports:
       - "19999:9999"
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ../Proxy_Server:/usr/src/Proxy_Server
       - ./source_code/socket.py:/usr/local/lib/python3.7/site-packages/engineio/socket.py
-      - /etc/localtime:/etc/localtime:ro
+      - ./source_code/server.py:/usr/local/lib/python3.7/site-packages/socketio/server.py
     depends_on:
       - proxy_server_mysql
   #    command: python ./models.py
