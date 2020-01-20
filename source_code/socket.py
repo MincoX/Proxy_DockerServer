@@ -72,8 +72,8 @@ class Socket(object):
             raise exceptions.SocketIsClosedError()
         if time.time() - self.last_ping > self.server.ping_interval + \
                 self.server.ping_interval_grace_period:
-            self.server.logger.info('%s: Client is gone, closing socket',
-                                    self.sid)
+            # self.server.logger.info('%s: Client is gone, closing socket',
+            #                         self.sid)
             # Passing abort=False here will cause close() to write a
             # CLOSE packet. This has the effect of updating half-open sockets
             # to their correct state of disconnected
