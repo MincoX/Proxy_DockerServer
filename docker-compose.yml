@@ -2,7 +2,7 @@ version: '3'
 
 services:
   proxy_server_mysql:
-    container_name: proxy_server_mysql
+    container_name: mysql_con
     restart: always
     image: mysql:5.7
     ports:
@@ -16,14 +16,14 @@ services:
       TZ: Asia/Shanghai
 
   proxy_server_redis:
-    container_name: proxy_server_redis
+    container_name: redis_con
     image: redis:latest
     restart: always
     ports:
       - "6379:6379"
 
   proxy_server_nginx:
-    container_name: proxy_server_nginx
+    container_name: nginx_con
     restart: always
     build:
       context: ./nginx/init
@@ -35,19 +35,18 @@ services:
     volumes:
       - ./nginx/logs:/tmp
       - ./nginx/init/proxy_server_api.conf:/etc/nginx/conf.d/proxy_server_api.conf:ro
-      - ../Proxy_Server/App/static:/usr/share/nginx/Proxy_Server/static
+      - ../Proxy_Flask/App/static:/usr/share/nginx/Proxy_Flask/static
 
   proxy_server_web:
     container_name: proxy_server_web
     restart: always
     build:
-      context: ../Proxy_Server
+      context: ../Proxy_Flask
       dockerfile: ./Dockerfile
     image: proxy_server_web
     ports:
       - "9999:9999"
     volumes:
-      - /var/log/gunicorn_access.log:/var/log/gunicorn_access.log
-      - /var/log/gunicorn_error.log:/var/log/gunicorn_error.log
+      - ../Proxy_Flask:/usr/src/Proxy_Flask
     depends_on:
       - proxy_server_mysql
