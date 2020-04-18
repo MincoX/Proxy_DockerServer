@@ -47,7 +47,6 @@ services:
     ports:
       - "9999:9999"
     volumes:
-      - /var/logs/gunicorn_access.log:/var/logs/gunicorn_access.log
-      - /var/logs/gunicorn_error.log:/var/logs/gunicorn_error.log
+      - ../Proxy_Server:/usr/src/Proxy_Server
     depends_on:
       - proxy_server_mysql
