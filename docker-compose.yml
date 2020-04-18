@@ -26,14 +26,14 @@ services:
     container_name: proxy_server_web
     restart: always
     build:
-      context: ../Proxy_Server
+      context: ../Proxy_Flask
       dockerfile: ./Dockerfile
     image: proxy_server_web
     ports:
       - "19999:9999"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ../Proxy_Server:/usr/src/Proxy_Server
+      - ../Proxy_Flask:/usr/src/Proxy_Flask
       - ./source_code/socket.py:/usr/local/lib/python3.7/site-packages/engineio/socket.py
       - ./source_code/server.py:/usr/local/lib/python3.7/site-packages/socketio/server.py
     depends_on:
@@ -53,5 +53,5 @@ services:
     volumes:
       - ./nginx/logs:/tmp
       - ./nginx/init/proxy_server_api.conf:/etc/nginx/conf.d/proxy_server_api.conf:ro
-      - ../Proxy_Server/App/static:/usr/share/nginx/Proxy_Server/static
+      - ../Proxy_Flask/App/static:/usr/share/nginx/Proxy_Flask/static
       - /etc/localtime:/etc/localtime:ro
